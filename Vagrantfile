@@ -2,12 +2,12 @@
 # vi: set ft=ruby :
 
 Vagrant::Config.run do |config|
-  
+
   #
   # Name of imported base box. (HINT: Rename this box)
   #
   config.vm.box = "ubuntu-11.10-server-amd64"
-  
+
   #
   # Download url of base box if it has not been previously imported.
   # See http://vagrantbox.es/ for more pre-built base boxes or
@@ -40,14 +40,14 @@ Vagrant::Config.run do |config|
   # The /srv path is owned by www-data so apache can write to it.
   #
   srv_path = File.expand_path(File.dirname(__FILE__)) + "/srv"
-  config.vm.share_folder("srv", "/srv", srv_path, :owner => "www-data", :group => "www-data", :create => true)
+  config.vm.share_folder("srv", "/srv", srv_path, :owner => "vagrant", :group => "www-data", :create => true)
 
   #
   # NFS Support.  The vboxfs is known to have performance issues
   # http://vagrantup.com/docs/nfs.html#performance_benchmarks
   #
   # If you want to use NFS simple halt your running instance, comment out the
-  # share_folder above and uncomment the share_folder below.  
+  # share_folder above and uncomment the share_folder below.
   #
   # config.vm.share_folder("srv", "/srv", srv_path, :nfs => true, :create => true);
 
@@ -72,7 +72,7 @@ Vagrant::Config.run do |config|
     chef.add_recipe "drupal"
     chef.add_recipe "drush::make"
     chef.add_recipe "initdb"
-  
+
     # Specify custom JSON node attributes:
     chef.json.merge!(
       :drupal => {
